@@ -1,5 +1,4 @@
 # Large model files
-*.pth
 *.pkl
 *.h5
 *.model
