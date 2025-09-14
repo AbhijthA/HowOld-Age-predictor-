@@ -1,5 +1,3 @@
-# app.py
-
 import base64
 import cv2
 import torch
@@ -110,7 +108,7 @@ class AudioPredictor:
             return f"Error: {str(e)}"
 
 # Initialize audio predictor
-AUDIO_PREDICTOR = AudioPredictor(model_dir='./models/')
+AUDIO_PREDICTOR = AudioPredictor(model_dir='./')
 
 # =================================================================
 # --- 3. API ENDPOINTS ---

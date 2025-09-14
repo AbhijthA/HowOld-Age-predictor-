@@ -366,6 +366,8 @@ function openAudioModal() {
   document.getElementById("audioPicker").value = "";
   document.getElementById("multiAudioPicker").value = "";
   document.getElementById("multiUploadedAudios").innerHTML = "";
+  const submitBtn = document.getElementById("singleAudioSubmit");
+  if (submitBtn) submitBtn.style.display = "none";
 }
 
 function closeAudioModal() {
@@ -377,9 +379,11 @@ function previewAudio(event) {
   if (!file || !file.type.startsWith('audio/')) return;
   
   const audio = document.getElementById("uploadedAudio");
+  const submitBtn = document.getElementById("singleAudioSubmit");
   const audioURL = URL.createObjectURL(file);
   audio.src = audioURL;
   audio.style.display = "block";
+  if (submitBtn) submitBtn.style.display = "inline-block";
   
   // Clean up previous URL
   audio.addEventListener('loadstart', () => {
@@ -388,6 +392,24 @@ function previewAudio(event) {
     }
     audio.dataset.prevUrl = audioURL;
   });
+}
+
+async function submitSingleAudio() {
+  const fileInput = document.getElementById("audioPicker");
+  const file = fileInput.files[0];
+  
+  if (!file) {
+    showNotification("No audio selected!", "error");
+    return;
+  }
+  
+  try {
+    showNotification("Processing audio...", "info");
+    const prediction = await predictAudio(file);
+    displayResults([{ filename: file.name, ...prediction }], "audio");
+  } catch (error) {
+    showNotification("Error processing audio: " + error.message, "error");
+  }
 }
 
 function previewMultipleAudios(event) {
