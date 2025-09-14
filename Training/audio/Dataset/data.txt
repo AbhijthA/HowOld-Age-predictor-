@@ -1,0 +1,5 @@
+import kagglehub
+
+print("Downloading dataset from Kaggle Hub...")
+data_root_path = kagglehub.dataset_download("mozillaorg/common-voice")
+print(f"✅ Dataset is ready and the path is stored in 'data_root_path': {data_root_path}")
