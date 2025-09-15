@@ -35,12 +35,20 @@ from torchvision import transforms, models
 from tqdm import tqdm
 
 
-AGE_CLASSES = [
+# Original age classes (excluding 0;2 and 3;9 for training)
+ALL_AGE_CLASSES = [
     "0;2", "3;9", "10;19", "20;29",
     "30;39", "40;49", "50;59", "60;69", "70;120"
 ]
 
+# Training age classes (excluding first two)
+AGE_CLASSES = [
+    "10;19", "20;29", "30;39", "40;49", 
+    "50;59", "60;69", "70;120"
+]
+
 AGE_TO_IDX = {a: i for i, a in enumerate(AGE_CLASSES)}
+EXCLUDED_AGES = {"0;2", "3;9"}
 
 
 class FairFaceAgeDataset(Dataset):
@@ -70,6 +78,11 @@ class FairFaceAgeDataset(Dataset):
                     continue
                 # Trim possible whitespace
                 age_label = age_label.strip()
+                
+                # Skip excluded age groups
+                if age_label in EXCLUDED_AGES:
+                    continue
+                    
                 # If age_label is numeric, try to bin it
                 if age_label in AGE_TO_IDX:
                     idx = AGE_TO_IDX[age_label]
@@ -78,6 +91,9 @@ class FairFaceAgeDataset(Dataset):
                     try:
                         ag = float(age_label)
                         idx = self._bin_age_numeric(ag)
+                        # Skip if binned age falls in excluded categories
+                        if idx == -1:
+                            continue
                     except Exception:
                         # unknown label - skip
                         continue
@@ -108,24 +124,24 @@ class FairFaceAgeDataset(Dataset):
 
     @staticmethod
     def _bin_age_numeric(age):
-        # bins that match AGE_CLASSES
+        # bins that match AGE_CLASSES (excluding 0;2 and 3;9)
         if age <= 2:
-            return 0
+            return -1  # excluded
         if age <= 9:
-            return 1
+            return -1  # excluded
         if age <= 19:
-            return 2
+            return 0  # 10;19
         if age <= 29:
-            return 3
+            return 1  # 20;29
         if age <= 39:
-            return 4
+            return 2  # 30;39
         if age <= 49:
-            return 5
+            return 3  # 40;49
         if age <= 59:
-            return 6
+            return 4  # 50;59
         if age <= 69:
-            return 7
-        return 8
+            return 5  # 60;69
+        return 6  # 70;120
 
 
 def make_transforms(train=True, image_size=224):
@@ -242,7 +258,7 @@ def parse_args():
     parser.add_argument('--val-images-dir', type=str, default='fairface-img-margin025-trainval\val', help='Val images subdir inside data-root')
     parser.add_argument('--backbone', type=str, default='resnet18', choices=['resnet18','resnet50'])
     parser.add_argument('--image-size', type=int, default=224)
-    parser.add_argument('--epochs', type=int, default=12)
+    parser.add_argument('--epochs', type=int, default=24)
     parser.add_argument('--batch-size', type=int, default=64)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--weight-decay', type=float, default=1e-4)
