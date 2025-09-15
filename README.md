@@ -159,7 +159,7 @@ Hackathon-main/
 │       ├── live_age_prediction.py
 │       ├── photo_age_prediction.py
 │       └── run_*.py
-└── requirements.txt          # Python dependencies
+└── requirements.txt          
 ```
 
 ## Technical Details
@@ -219,7 +219,7 @@ Hackathon-main/
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details
 
 ## Acknowledgments
 
