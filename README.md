@@ -2,7 +2,7 @@
 
 A comprehensive age estimation system that uses both image and audio analysis to predict age groups. The system combines computer vision and audio processing techniques to provide accurate age predictions through multiple input modalities.
 
-![Project Image](App Roadmap.png)
+![Project Image](roadmap.png)
 
 ## Features
 
