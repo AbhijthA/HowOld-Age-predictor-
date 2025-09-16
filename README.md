@@ -2,6 +2,8 @@
 
 A comprehensive age estimation system that uses both image and audio analysis to predict age groups. The system combines computer vision and audio processing techniques to provide accurate age predictions through multiple input modalities.
 
+![Project Image](roadmap.png)
+
 ## Features
 
 - **Image-based Age Prediction**: Upload images or use real-time camera feed for age estimation
@@ -159,7 +161,7 @@ Hackathon-main/
 │       ├── live_age_prediction.py
 │       ├── photo_age_prediction.py
 │       └── run_*.py
-└── requirements.txt          # Python dependencies
+└── requirements.txt          
 ```
 
 ## Technical Details
@@ -219,7 +221,7 @@ Hackathon-main/
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details
 
 ## Acknowledgments
 

@@ -1,6 +1,4 @@
-"""
-Runner script for live age prediction.
-"""
+# Runner script for live age prediction
 
 import subprocess
 import os
@@ -22,7 +20,7 @@ def main():
         if os.path.exists(image_path):
             subprocess.run(["python", "photo_age_prediction.py", "--image", image_path])
         else:
-            print(f"Image file not found: {image_path}")
+            print(f"Image file not found at {image_path}")
     
     else:
         print("Invalid choice")
