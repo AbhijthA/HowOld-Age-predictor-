@@ -1,6 +1,4 @@
-"""
-Live age prediction using webcam and trained ResNet model.
-"""
+# Live age prediction using webcam and trained ResNet model
 
 import cv2
 import torch
@@ -125,19 +123,15 @@ def main():
         
         # Process each face
         for (x, y, w, h) in faces:
-            # Extract face
-            face = frame[y:y+h, x:x+w]
+            face = frame[y:y+h, x:x+w]    # Extract face
             
-            # Predict age
-            age_group, confidence = predict_age(model, face, transform, device)
+            age_group, confidence = predict_age(model, face, transform, device)    # Predict age
             
-            # Draw rectangle and text
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)    # Draw rectangle and text
             text = f"{age_group} ({confidence:.2f})"
             cv2.putText(frame, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
         
-        # Show frame
-        cv2.imshow('Age Prediction', frame)
+        cv2.imshow('Age Prediction', frame)    # Show frame
         
         # Handle keys
         key = cv2.waitKey(1) & 0xFF
