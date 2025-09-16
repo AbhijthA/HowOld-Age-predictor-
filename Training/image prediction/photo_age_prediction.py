@@ -1,6 +1,4 @@
-"""
-Age prediction from photo using trained ResNet model.
-"""
+# Age prediction from photo using trained ResNet model
 
 import cv2
 import torch
@@ -74,7 +72,7 @@ def predict_age_from_photo(image_path, model_path):
         text = f"{age_group} ({confidence:.2f})"
         cv2.putText(img, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
     
-    # Save result
+    # Save the  result
     output_path = image_path.replace('.', '_predicted.')
     cv2.imwrite(output_path, img)
     print(f"Result saved to: {output_path}")
